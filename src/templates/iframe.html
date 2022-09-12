@@ -1,0 +1,91 @@
+<body>
+<script>
+    // limit the properties of the window object
+
+    function $_setup () {
+        function removeEverything (from, exceptions) {
+            const blocked = Object.getOwnPropertyNames(from)
+            .filter(e => !exceptions.includes(e));
+            const reported = () => {}
+            blocked.forEach(e => {
+                try {
+                    Object.defineProperty(from, e, { 
+                        get: reported,
+                        set: reported,
+                        configurable: false,
+                        enumerable: false
+                    });
+                } catch {}
+            });
+        }
+
+        const allowWindow = $$window_allow;
+        removeEverything(window, allowWindow);
+        //removeEverything(document, []);
+    }
+
+    // stack and reporter system and functions for working with them
+
+    const $_action_stack = [];
+    const $_reporter_data = $$reporterData;
+
+    function $_event_begin () {
+        $_action_stack.length = 0;
+    }
+
+    function $_event_action (name, data, executeMode="instant") {
+        $_action_stack.push({
+            name: name, data: data, executeMode: executeMode
+        });
+    }
+
+    // communicate with the outer page
+
+    window.addEventListener('message', e => {
+        $_setup();
+        let result, error;
+        try { result = eval(e.data) } catch (e) { error = e }
+
+        try {
+            window.top.postMessage({ 
+                script: '$$iframeId', 
+                actions: $_action_stack,
+                result: result,
+                error: error
+            }, '*');
+        } catch (e) {
+            window.top.postMessage({ 
+                script: '$$iframeId', 
+                actions: [],
+                result: undefined,
+                error: e
+            }, '*');
+        }
+    });
+
+    // define scope components
+
+    $$definitions
+
+    try {
+        // block use of window, document, etc.
+        let top = null;
+        let window = null;
+        let self = null;
+        let document = null;
+        let location = null;
+
+        $$script
+    } catch (e) {
+        // post error if the script is invalid upon initialization
+        window.top.postMessage({ 
+            script: '$$iframeId', 
+            actions: [],
+            result: undefined,
+            error: e
+        }, '*');
+    }
+
+
+</script>
+</body>

@@ -1,0 +1,1 @@
+const $$name = $$returns_default ;

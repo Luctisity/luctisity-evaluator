@@ -1,0 +1,5 @@
+{
+    "allow": [
+        "Set", "Object", "eval", "clearInterval", "setInterval", "setTimeout", "Math", "JSON"
+    ]
+}

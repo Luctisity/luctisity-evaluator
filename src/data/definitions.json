@@ -1,0 +1,70 @@
+[
+    {
+        "type": "action",
+        "name": "moveTo",
+        "description": "Moves the node to a specific location on the canvas",
+        "arguments": [
+            { "name": "x", "type": "number", "default": 0 },
+            { "name": "y", "type": "number", "default": 0 }
+        ],
+        "action": {
+            "name": "moveNodeTo",
+            "executeMode": "instant",
+            "data": {
+                "x": "$x",
+                "y": "$y"
+            }
+        }
+    },
+    {
+        "type": "action",
+        "name": "print",
+        "description": "Prints given value(s) to the console.",
+        "arguments": [
+            { "name": "...data", "type": "any" }
+        ],
+        "action": {
+            "name": "consolePrint",
+            "executeMode": "instant",
+            "data": {
+                "data": "$data"
+            }
+        }
+    },
+    {
+        "type": "reporter",
+        "name": "touchingNode",
+        "description": "Returns whether or not this node is touching another specific node.",
+        "arguments": [
+            { "name": "targetNodeName", "type": "string", "default": "" }
+        ],
+        "returns": { "type": "number", "default": 0 },
+        "reporter": ["touchingNodes", "$targetNodeName"],
+        "reporterReturns": "truthy"
+    },
+    {
+        "type": "variable",
+        "name": "mouseX",
+        "description": "Get the X position of the mouse pointer, relative to the canvas.",
+        "returns": { "type": "number", "default": 0 },
+        "reporter": ["mouse", "x"],
+        "reporterReturns": "value"
+    },
+    {
+        "type": "constant",
+        "name": "BASED_LEVEL",
+        "description": "Walter Hartwell White.",
+        "returns": { "type": "number", "default": 420 }
+    },
+    {
+        "type": "enum",
+        "name": "BreakingBad",
+        "description": "The one piece, it's real.",
+        "options": [
+            { "type": "string", "default": "WALTER" },
+            { "type": "string", "default": "JESSE" },
+            { "type": "string", "default": "HANK" },
+            { "type": "string", "default": "FINGER" }
+        ]
+    }
+]
