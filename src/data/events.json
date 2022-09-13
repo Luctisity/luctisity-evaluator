@@ -1,0 +1,29 @@
+[
+    {
+        "name": "start",
+        "function": "onStart",
+        "arguments": []
+    },
+    {
+        "name": "process",
+        "function": "everyFrame",
+        "arguments": [
+            { "name": "delta", "type": "number" }
+        ]
+    },
+    {
+        "name": "nodeMessage",
+        "function": "onMessage",
+        "arguments": [
+            { "name": "message", "type": "string" },
+            { "name": "...args", "type": "any" }
+        ]
+    },
+    {
+        "name": "cloneCreate",
+        "function": "onCloneCreate",
+        "arguments": [
+            { "name": "id", "type": "number" }
+        ]
+    }
+]
